@@ -20,7 +20,7 @@ Table of Contents
   * [Quickstart](#quickstart)
   * [Configuration](#configuration)
   * [Features](#features)
-  * [Extending](#extending)
+  * [Extending to other languages](#extending-to-other-languages)
   * [Citation](#citation)
 
 ## Requirements
