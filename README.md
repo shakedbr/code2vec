@@ -64,13 +64,15 @@ You can either download an already-trained model, or train a new model using a p
 
 #### Downloading a trained model (1.4G)
 We already trained a model for 8 epochs on the data that was preprocessed in the previous step.
-The number of epochs was chosen using [early stopping](https://en.wikipedia.org/wiki/Early_stopping), as the version that maximized the F1 score
-on the validation set.
+The number of epochs was chosen using [early stopping](https://en.wikipedia.org/wiki/Early_stopping), as the version that maximized the F1 score on the validation set.
 ```
 wget https://s3.amazonaws.com/code2vec/model/java14m_model.tar.gz
 mkdir -p models/java14m/
 tar -xvzf java14m_model.tar.gz -C models/java14m/
 ```
+
+##### Note:
+This trained model is in a "released" state, which means that we stripped it from its training parameters and can thus be used for inference, but cannot be further trained. If you use this trained model in the next steps, use 'saved_model_iter8.release' instead of 'saved_model_iter8' in every command line example that loads the model such as: '--load models/java14m/saved_model_iter8'. To read how to release a model, see [Releasing the model](#releasing-the-model).
 
 #### Training a model from scratch
 To train a model from scratch:
