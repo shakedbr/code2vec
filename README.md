@@ -6,7 +6,7 @@ This is an official implemention of the model described in:
 "code2vec: Learning Distributed Representations of Code", 2018 
 https://arxiv.org/pdf/1803.09473
 
-An *online demo* is available at [https://code2vec.org/](https://code2vec.org/).
+An **online demo** is available at [https://code2vec.org/](https://code2vec.org/).
 
 This is a TensorFlow implementation, designed to be easy and useful in research, 
 and for experimenting with new ideas in machine learning for code tasks.
