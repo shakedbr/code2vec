@@ -1,10 +1,7 @@
 package JavaExtractor;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,7 +42,7 @@ public class FeatureExtractor {
 
 	public ArrayList<ProgramFeatures> extractFeatures() throws ParseException, IOException {
 		m_CompilationUnit = parseFileWithRetries(code);
-		FunctionVisitor functionVisitor = new FunctionVisitor();
+		FunctionVisitor functionVisitor = new FunctionVisitor(m_CommandLineValues);
 
 		functionVisitor.visit(m_CompilationUnit, null);
 
@@ -96,7 +93,7 @@ public class FeatureExtractor {
 	}
 
 	private ProgramFeatures generatePathFeaturesForFunction(MethodContent methodContent) {
-		ArrayList<Node> functionLeaves = methodContent.getLeaves();
+		List<Node> functionLeaves = methodContent.getLeaves();
 		ProgramFeatures programFeatures = new ProgramFeatures(methodContent.getName());
 
 		for (int i = 0; i < functionLeaves.size(); i++) {

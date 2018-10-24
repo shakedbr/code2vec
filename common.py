@@ -21,12 +21,14 @@ class Config:
         config.PATHS_VOCAB_SIZE = 911417
         config.EMBEDDINGS_SIZE = 128
         config.MAX_TO_KEEP = 10
+        config.SUB_TREES_THRESHOLD = 0.6
         # Automatically filled, do not edit:
         config.TRAIN_PATH = args.data_path
         config.TEST_PATH = args.test_path
         config.SAVE_PATH = args.save_path
         config.LOAD_PATH = args.load_path
         config.RELEASE = args.release
+        config.PARSE_SUB_TREES = args.parse_sub_trees
         return config
 
     def __init__(self):
@@ -48,6 +50,8 @@ class Config:
         self.LOAD_PATH = ''
         self.MAX_TO_KEEP = 0
         self.RELEASE = False
+        self.PARSE_SUB_TREES = False
+        self.SUB_TREES_THRESHOLD = 0
 
 
 class common:

@@ -11,6 +11,8 @@ class Extractor:
     def extract_paths(self, path):
         command = ['java', '-cp', self.jar_path, 'JavaExtractor.App', '--max_path_length',
                    str(self.max_path_length), '--max_path_width', str(self.max_path_width), '--file', path, '--no_hash']
+        if self.config.PARSE_SUB_TREES is True:
+            command.append("--parse_sub_trees")
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = process.communicate()
         output = out.decode().splitlines()

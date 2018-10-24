@@ -1,20 +1,22 @@
 package JavaExtractor.Common;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.github.javaparser.ast.Node;
 
 public class MethodContent {
-	private ArrayList<Node> leaves;
+	private List<Node> leaves;
 	private String name;
 	private long length;
 
-	public MethodContent(ArrayList<Node> leaves, String name, long length) {
+	public MethodContent(List<Node> leaves, String name, long length) {
 		this.leaves = leaves;
 		this.name = name;
 		this.length = length;
 	}
 
-	public ArrayList<Node> getLeaves() {
+	public List<Node> getLeaves() {
 		return leaves;
 	}
 

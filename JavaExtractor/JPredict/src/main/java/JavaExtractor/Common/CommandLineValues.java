@@ -39,6 +39,9 @@ public class CommandLineValues {
 	@Option(name = "--max_child_id", required = false)
 	public int MaxChildId = Integer.MAX_VALUE;
 
+	@Option(name = "--parse_sub_trees", required = false)
+	public boolean ParseSubTrees = false;
+
 	public CommandLineValues(String... args) throws CmdLineException {
 		CmdLineParser parser = new CmdLineParser(this);
 		try {

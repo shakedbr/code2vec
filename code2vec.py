@@ -28,6 +28,7 @@ if __name__ == '__main__':
                         help='if specified and loading a trained model, release the loaded model for a lower model '
                              'size.')
     parser.add_argument('--predict', action='store_true')
+    parser.add_argument('--parse_sub_trees', action='store_true', required=False)
     args = parser.parse_args()
 
     config = Config.get_default_config(args)

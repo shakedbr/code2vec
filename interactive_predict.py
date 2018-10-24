@@ -42,11 +42,24 @@ class InteractivePredictor:
                 continue
             results = self.model.predict(predict_lines)
             prediction_results = common.parse_results(results, hash_to_string_dict, topk=SHOW_TOP_CONTEXTS)
-            for method_prediction in prediction_results:
-                print('Original name:\t' + method_prediction.original_name)
-                for name_prob_pair in method_prediction.predictions:
+            if self.config.PARSE_SUB_TREES is True:
+                print('Original name:\t' + prediction_results[0].original_name)
+                print("Threshold for each sub tree:\t {}".format(self.config.SUB_TREES_THRESHOLD))
+                filtered_predictions = [prediction for pred in prediction_results for prediction in pred.predictions if prediction['probability'] > self.config.SUB_TREES_THRESHOLD]
+                filtered_attention = [pred.attention_paths for pred in prediction_results for prediction in pred.predictions if prediction['probability'] > self.config.SUB_TREES_THRESHOLD]
+                for name_prob_pair in filtered_predictions:
                     print('\t(%f) predicted: %s' % (name_prob_pair['probability'], name_prob_pair['name']))
                 print('Attention:')
-                for attention_obj in method_prediction.attention_paths:
+                for attention_obj in filtered_attention:
                     print('%f\tcontext: %s,%s,%s' % (
-                    attention_obj['score'], attention_obj['token1'], attention_obj['path'], attention_obj['token2']))
+                        attention_obj[0]['score'], attention_obj[0]['token1'], attention_obj[0]['path'],
+                        attention_obj[0]['token2']))
+            else:
+                for method_prediction in prediction_results:
+                    print('Original name:\t' + method_prediction.original_name)
+                    for name_prob_pair in method_prediction.predictions:
+                        print('\t(%f) predicted: %s' % (name_prob_pair['probability'], name_prob_pair['name']))
+                    print('Attention:')
+                    for attention_obj in method_prediction.attention_paths:
+                        print('%f\tcontext: %s,%s,%s' % (
+                        attention_obj['score'], attention_obj['token1'], attention_obj['path'], attention_obj['token2']))
