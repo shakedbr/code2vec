@@ -13,6 +13,7 @@ public class PythonRunner {
     private Process serverProcess = null;
 
     private PythonRunner(String interperterPath, String modulePath, Listener listener) throws IOException {
+        new File(FILE).delete();
         server = new GatewayServer(listener);
         server.start(true);
         ProcessBuilder pb = new ProcessBuilder(interperterPath, "-u", modulePath);

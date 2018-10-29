@@ -15,12 +15,12 @@ import JavaExtractor.FeaturesEntities.Property;
 
 import java.util.*;
 
-public class InOrderVisitor extends TreeVisitor {
+public class PostOrderVisitor extends TreeVisitor {
     private List<EvaluationResult> results;
     private INodeProcessor processor;
     private int currentId = 1;
 
-    public InOrderVisitor(INodeProcessor processor) {
+    public PostOrderVisitor(INodeProcessor processor) {
         this.processor = processor;
         results = new ArrayList<>();
     }
@@ -30,27 +30,20 @@ public class InOrderVisitor extends TreeVisitor {
         if (node instanceof Comment) {
             return;
         }
-        boolean isGenericParent = VisitorsUtils.isGenericParent(node);
         if (!VisitorsUtils.hasNoChildren(node) && VisitorsUtils.isNotComment(node) && VisitorsUtils.isValid(node)) {
             if (!node.toString().isEmpty() && (!"null".equals(node.toString()) || (node instanceof NullLiteralExpr))) {
                 EvaluationResult res = processor.process(node);
                 results.add(res);
             }
         }
-        if (node.getParentNode() == null) {
-            return;
-        }
-        int childId = VisitorsUtils.getChildId(node);
-        node.setUserData(Common.ChildId, childId);
-        Property property = new Property(node, false, isGenericParent, currentId++);
-        node.setUserData(Common.PropertyKey, property);
     }
 
     @Override
     public void visitDepthFirst(Node node) {
-        Iterator var2 = node.getChildrenNodes().iterator();
-        while(var2.hasNext()) {
-            Node child = (Node)var2.next();
+        List<Node> childrenNodes = node.getChildrenNodes();
+        int size = childrenNodes.size();
+        for (int i = 0; i < size; i++) {
+            Node child = childrenNodes.get(i);
             this.visitDepthFirst(child);
         }
         this.process(node);

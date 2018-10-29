@@ -1,23 +1,17 @@
-import JavaExtractor.Common.CommandLineValues;
-import JavaExtractor.Common.Common;
-import JavaExtractor.ExtractFeaturesTask;
-import JavaExtractor.FeaturesEntities.ProgramRelation;
 import com.github.javaparser.ast.CompilationUnit;
 import evaluation.EvaluationDummy;
 import evaluation.IEvaluation;
 import model.EvaluationResult;
-import org.kohsuke.args4j.CmdLineException;
 import processor.INodeProcessor;
-import processor.InferenceProcessor;
+import processor.InferenceReplaceProcessor;
 import utils.Listener;
 import utils.ParsingUtils;
 import utils.PythonRunner;
-import visitor.InOrderVisitor;
+import visitor.PostOrderVisitor;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 
 public class RunSegmentation {
@@ -46,8 +40,8 @@ public class RunSegmentation {
         }
 
         IEvaluation eval = new EvaluationDummy();
-        INodeProcessor processor = new InferenceProcessor(listener, eval);
-        InOrderVisitor visitor = new InOrderVisitor(processor);
+        INodeProcessor processor = new InferenceReplaceProcessor(listener, eval);
+        PostOrderVisitor visitor = new PostOrderVisitor(processor);
         visitor.visitDepthFirst(compilationUnit);
         List<EvaluationResult> results =  visitor.getResults();
         results.stream().filter(r -> r.isBestLabeled())

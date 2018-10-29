@@ -23,6 +23,7 @@ class PythonListener():
 
     def runMethod(self, s):
         save_to_file(INPUT_FILE, s)
+        print(s)
         res = self.predictor.predict()[0]
         return json.dumps(res.__dict__)
 
@@ -67,6 +68,7 @@ def init_model():
     listener = PythonListener(gateway)
     listener.set_params(config, model, predictor)
     return listener
+
 
 if __name__ == "__main__":
     print("[P]: Python server started")

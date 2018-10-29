@@ -9,6 +9,7 @@ public class EvaluationResult {
     private PredictionsResult predictionsResult;
     private boolean bestLabeled;
     private String label;
+    private String replaceTo;
 
     public EvaluationResult(Node node, PredictionsResult predictionsResult, boolean bestLabeled, String label) {
         this.node = node;
@@ -33,17 +34,28 @@ public class EvaluationResult {
         return label;
     }
 
+    public void setReplaceTo(String replaceTo) {
+        this.replaceTo = replaceTo;
+    }
+
+    public String getReplaceTo() {
+        return replaceTo;
+    }
+
     public String formatResults() {
         String code = node.toString();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String predictions =  gson.toJson(predictionsResult);
         String part;
         if (bestLabeled) {
-            part = "best labeled with label: " + label;
+            part = "best labeled with the label: '" + label + "'";
+            if (replaceTo != null) {
+                part = part + ", and can be replace with this function call: '" + replaceTo + "'";
+            }
         } else {
             part = "not best labeled";
         }
-        String output  = "The AST of " + code + "\n is " + part
+        String output  = "The AST of\n" + code + "\n is " + part
                 + "\n with those predictions results: " + predictions + "\n";
         return output;
     }
